@@ -15,9 +15,14 @@ class UserDaoTest {
     private final UserDao nUserDao;
     private final UserDao kUserDao;
 
-    UserDaoTest(@Qualifier("nUserDao") UserDao nUserDao, @Qualifier("kUserDao") UserDao kUserDao) {
+    private final CountableConnectionMaker countableConnectionMaker;
+
+    UserDaoTest(@Qualifier("nUserDao") UserDao nUserDao,
+                @Qualifier("kUserDao") UserDao kUserDao,
+                @Qualifier("countableNConnectionMaker") CountableConnectionMaker countableConnectionMaker) {
         this.nUserDao = nUserDao;
         this.kUserDao = kUserDao;
+        this.countableConnectionMaker = countableConnectionMaker;
     }
 
     @Test
@@ -39,5 +44,13 @@ class UserDaoTest {
 
         User selectedUser = userDao.get(addedUser.getId());
         assertEquals(addedUser, selectedUser);
+    }
+
+    @Test
+    void countableConnectionMaker() throws SQLException, ClassNotFoundException {
+        int beforeCount = countableConnectionMaker.getCount();
+        user_추가_usingNUserDao();
+        int afterCount = countableConnectionMaker.getCount();
+        assertEquals(afterCount - beforeCount, 2);
     }
 }
