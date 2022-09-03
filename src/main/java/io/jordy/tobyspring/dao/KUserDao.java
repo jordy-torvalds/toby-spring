@@ -6,11 +6,12 @@ import java.sql.SQLException;
 import static java.sql.DriverManager.getConnection;
 
 public class KUserDao extends UserDao{
+    private final ConnectionMaker connectionMaker;
+    public KUserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
 
     protected Connection createConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return getConnection("jdbc:mysql://localhost:3306/default",
-                "root",
-                "password");
+        return connectionMaker.createConnection();
     }
 }
