@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserDaoTest {
 
     @Test
-    void user_추가_usingNUserDao() throws SQLException, ClassNotFoundException {
-        UserDao userDao = new NUserDao(new ConnectionMaker());
+    void user_추가_usingNConnectionMaker() throws SQLException, ClassNotFoundException {
+        UserDao userDao = new UserDao(new NConnectionMaker());
         User user = new User(new Random().nextLong(), "쪼꼬미", "password");
 
         User addedUser = userDao.add(user);
@@ -21,8 +21,8 @@ class UserDaoTest {
         assertEquals(addedUser, selectedUser);
     }
     @Test
-    void user_추가_usingKUserDao() throws SQLException, ClassNotFoundException {
-        UserDao userDao = new KUserDao(new ConnectionMaker());
+    void user_추가_usingKConnectionMaker() throws SQLException, ClassNotFoundException {
+        UserDao userDao = new UserDao(new KConnectionMaker());
         User user = new User(new Random().nextLong(), "쪼꼬미", "password");
 
         User addedUser = userDao.add(user);

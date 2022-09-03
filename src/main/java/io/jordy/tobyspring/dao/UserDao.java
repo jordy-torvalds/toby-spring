@@ -6,9 +6,14 @@ import java.sql.*;
 
 import static java.sql.DriverManager.getConnection;
 
-public abstract class UserDao {
+public class UserDao {
+    private final ConnectionMaker connectionMaker;
+    public UserDao(ConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
+
     public User add(User user) throws ClassNotFoundException, SQLException {
-        Connection connection = createConnection();
+        Connection connection = connectionMaker.createConnection();
 
         PreparedStatement preparedStatement
                 = connection.prepareStatement("insert into user(id, name, password) values(?,?,?)");
@@ -23,7 +28,7 @@ public abstract class UserDao {
         return user;
     }
     public User get(Long id) throws ClassNotFoundException, SQLException {
-        Connection connection = createConnection();
+        Connection connection = connectionMaker.createConnection();
 
         PreparedStatement preparedStatement
                 = connection.prepareStatement("select * from user where id = ?");
@@ -41,6 +46,4 @@ public abstract class UserDao {
 
         return user;
     }
-
-    protected abstract Connection createConnection() throws SQLException, ClassNotFoundException ;
 }
