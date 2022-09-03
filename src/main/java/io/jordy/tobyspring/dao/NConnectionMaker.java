@@ -1,10 +1,12 @@
 package io.jordy.tobyspring.dao;
 
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import static java.sql.DriverManager.getConnection;
-
+@Component
 public class NConnectionMaker implements ConnectionMaker {
     @Override
     public Connection createConnection() throws ClassNotFoundException, SQLException {

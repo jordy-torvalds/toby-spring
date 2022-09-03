@@ -1,10 +1,16 @@
 package io.jordy.tobyspring.dao;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
 public class DaoFactory {
-    public UserDao nUserDao() {
-        return new UserDao(new NConnectionMaker());
+    @Bean
+    public UserDao nUserDao(NConnectionMaker connectionMaker) {
+        return new UserDao(connectionMaker);
     }
-    public UserDao kUserDao() {
-        return new UserDao(new KConnectionMaker());
+    @Bean
+    public UserDao kUserDao(KConnectionMaker connectionMaker) {
+        return new UserDao(connectionMaker);
     }
 }
