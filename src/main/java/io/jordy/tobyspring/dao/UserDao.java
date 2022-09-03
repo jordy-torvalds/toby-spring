@@ -6,7 +6,7 @@ import java.sql.*;
 
 import static java.sql.DriverManager.getConnection;
 
-public class UserDao {
+public abstract class UserDao {
     public User add(User user) throws ClassNotFoundException, SQLException {
         Connection connection = createConnection();
 
@@ -42,10 +42,5 @@ public class UserDao {
         return user;
     }
 
-    private Connection createConnection() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return getConnection("jdbc:mysql://localhost:3306/default",
-                "root",
-                "password");
-    }
+    protected abstract Connection createConnection() throws SQLException, ClassNotFoundException ;
 }
