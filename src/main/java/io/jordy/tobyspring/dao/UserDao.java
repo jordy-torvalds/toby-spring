@@ -8,11 +8,7 @@ import static java.sql.DriverManager.getConnection;
 
 public class UserDao {
     public User add(User user) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection
-                = getConnection("jdbc:mysql://localhost:3306/default",
-                "root",
-                "password");
+        Connection connection = createConnection();
 
         PreparedStatement preparedStatement
                 = connection.prepareStatement("insert into user(id, name, password) values(?,?,?)");
@@ -27,11 +23,7 @@ public class UserDao {
         return user;
     }
     public User get(Long id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection
-                = getConnection("jdbc:mysql://localhost:3306/default",
-                "root",
-                "password");
+        Connection connection = createConnection();
 
         PreparedStatement preparedStatement
                 = connection.prepareStatement("select * from user where id = ?");
@@ -48,5 +40,12 @@ public class UserDao {
         connection.close();
 
         return user;
+    }
+
+    private Connection createConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        return getConnection("jdbc:mysql://localhost:3306/default",
+                "root",
+                "password");
     }
 }
